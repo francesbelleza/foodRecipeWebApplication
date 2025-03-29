@@ -1,3 +1,17 @@
+# Need to create:
+#   Recipe model with following:
+#          [] id: primary key
+#          [] title: max length 80 characters
+#          [] description: text
+#          [] ingredients: text
+#          [] instructions: text
+#          [] created: datetime
+
+
+
+
+
+
 from app import db
 
 class User(db.Model):
