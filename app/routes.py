@@ -1,3 +1,16 @@
+# Need to create 4 pages:
+#       [] /recipes
+#           [] This page with an unordered list Links to an external
+#              site.will show all of the names of the recipes you have.
+#       [] /recipe/new
+#           [] In this page you will have a form that will allow you
+#              to add a new recipe.
+#       [] /recipe/<integer>
+#           [] This page will return one recipe with its details
+#       [] /recipe/<integer>/delete
+#           [] This page will delete the specific recipe
+
+
 from app import myapp_obj
 from flask import render_template
 from flask import redirect

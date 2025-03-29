@@ -1,3 +1,13 @@
+# Need to create:
+#   Recipe form with following:
+#       [] title [string, required]
+#       [] description [TextAreaLinks to an external site., required]
+#       [] ingredients [TextArea, required]
+#       [] instructions [TextArea, required
+#       [] submit field
+
+
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, validators
 
