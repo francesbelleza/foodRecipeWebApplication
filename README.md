@@ -13,7 +13,7 @@ that allows users to create, view, update and delete food recipes.
 ## **Dev Tasks**
 - [] 4 pages 
 - [] create Recipe form
-- [] create a Recipe Model
-- [] generate database
+- [x] create a Recipe Model
+- [x] generate database
 - [] 4 HTML Templates 
 ~ details of what to create are on each .py files ~
