@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %} List of Recipes {% endblock %}
+
+{% block content %}
+    <h1> Here's a list of all your saved recipes! </h1>
+
+    {% if recipes %}
+        <ul>
+            {% for recipe in recipes %}
+                <li> {{ recipe.title }}
+                    <a href="{{ url_for('specific_recipe', recipe_id=recipe.id) }}"
+                    ><br>View Recipe</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recipes added yet!</p>
+    {% endif %}
+
+{% endblock %}

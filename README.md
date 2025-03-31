@@ -12,7 +12,7 @@ that allows users to create, view, update and delete food recipes.
 
 ## **Dev Tasks**
 - [] 4 pages 
-- [] create Recipe form
+- [x] create Recipe form
 - [x] create a Recipe Model
 - [x] generate database
 - [] 4 HTML Templates 

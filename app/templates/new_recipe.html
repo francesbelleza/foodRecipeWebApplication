@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% block of content %}
+{% block title %} Add Recipe {% endblock %}
 
-  <h1> Add a New Recipe </h1>>
+{% block content %}
+
+  <h1> Add a New Recipe </h1>
   <form method="POST">
     {{ form.hidden_tag() }}
     <p>{{ form.title.label }} {{ form.title }}</p>

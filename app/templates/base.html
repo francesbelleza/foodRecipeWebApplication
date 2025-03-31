@@ -5,13 +5,11 @@
 </head>
 <body>
     <nav>
-        <ul>
             Navigation:
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('recipes') }}">All Recipes</a></li>
-            <li><a href="{{ url_for('new_recipe') }}">Add Recipes</a></li>
-        </ul>
+            <a href="{{ url_for('home') }}">Home</a> |
+            <a href="{{ url_for('login') }}">Login</a> |
+            <a href="{{ url_for('recipes') }}">All Recipes</a> |
+            <a href="{{ url_for('new_recipe') }}">Add Recipes</a> |
     </nav>
     <div>
         {% block content %}{% endblock %}

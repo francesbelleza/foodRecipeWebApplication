@@ -8,6 +8,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.fields.simple import TextAreaField
 from wtforms.validators import DataRequired
 from wtforms.widgets.core import TextArea
 
@@ -20,8 +21,8 @@ class LoginForm(FlaskForm):
 
 class NewRecipe(FlaskForm):
     title = StringField('Recipe Title', validators = [DataRequired()])
-    description = TextArea('Description', validators = [DataRequired()])
-    ingredients = TextArea('Ingredients', validators=[DataRequired()])
-    instructions = TextArea('Instructions', validators=[DataRequired()])
+    description = TextAreaField('Description', validators = [DataRequired()])
+    ingredients = TextAreaField('Ingredients', validators=[DataRequired()])
+    instructions = TextAreaField('Instructions', validators=[DataRequired()])
     submit = SubmitField('Save')
 
