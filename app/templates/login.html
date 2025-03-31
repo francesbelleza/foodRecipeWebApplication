@@ -1,6 +1,11 @@
-<html>
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
 <head>
-    <title>Home Page - my blog</title>
+    <title>Sign In</title>
 </head>
 <body>
     <h1>Sign In</h1>
@@ -16,4 +21,6 @@
         <p>{{form.remember_me()}}</p>
     </form>
 </body>
-</html>
+
+{% endblock %}
+
