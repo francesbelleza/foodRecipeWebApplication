@@ -10,12 +10,14 @@
 #       [x] /recipe/<integer>
 #           [x] This page will return one recipe with its details
 #           [x] HTML
-#       [] /recipe/<integer>/delete
-#           [] This page will delete the specific recipe
-#           [] HTML
+#       [x] /recipe/<integer>/delete
+#           [x] This page will delete the specific recipe
+#           [x] HTML
 
+from flask_login import logout_user, login_required, current_user, login_user
+from werkzeug.security import generate_password_hash
 
-from app import myapp_obj
+from app import myapp_obj, login_manager
 from flask import render_template, flash, redirect, url_for, request
 from flask import redirect
 from app.forms import LoginForm, NewRecipe
@@ -25,24 +27,56 @@ from app import db
 
 @myapp_obj.route("/")
 def home():
-    return render_template("home.html")
+    recipes = Recipe.query.all()
+    return render_template("home.html", recipes=recipes)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @myapp_obj.route("/login", methods = ['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+
     form = LoginForm()
 
     if form.validate_on_submit():
-        if form.user.data == "correct_username" and form.password.data == "correct_password":
+        if form.username.data == "correct_username" and form.password.data == "correct_password":
             flash('Login successful.', 'success')
             return redirect(url_for('recipes'))
-        else:
-            flash('Wrong user name and/or password', 'error')
 
+        user = User.query.filter_by(username=form.username.data).first()
+
+        if user and user.check_password(form.password.data):
+                login_user(user, remember=form.remember_me.data)
+                flash(f"Welcome back, {user.username}.", "success")
+                return redirect(url_for('home'))
+        else:
+                flash("Wrong username or password", "error")
+
+
+        if not user:
+            new_user = User(username=form.username.data)
+            new_user.set_password(form.password.data)
+
+            db.session.add(new_user)
+            db.session.commit()
+
+            login_user(new_user, remember=form.remember_me.data)
+            flash(f"Account created", "success")
+            return redirect(url_for("home"))
     return render_template("login.html", title='Sign In', form=form)
 
+@myapp_obj.route("/logout", methods = ["GET", "POST"])
+@login_required
+def logout():
+    logout_user()
+    flash("Logged out successfully", 'success')
+    return redirect(url_for("login"))
 
 @myapp_obj.route("/recipes", methods = ['GET'])
+@login_required
 def recipes():
     all_recipes = Recipe.query.all()
 
@@ -50,6 +84,7 @@ def recipes():
 
 
 @myapp_obj.route("/recipe/<int:recipe_id>")
+@login_required
 def specific_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
 
@@ -57,6 +92,7 @@ def specific_recipe(recipe_id):
 
 
 @myapp_obj.route("/recipe/new", methods = ['GET', 'POST'])
+@login_required
 def new_recipe():
     form = NewRecipe()
 
@@ -77,6 +113,7 @@ def new_recipe():
 
 
 @myapp_obj.route("/recipe/<int:recipe_id>/delete", methods=['GET', 'POST'])
+@login_required
 def delete_recipe(recipe_id):
     recipe = Recipe.query.get(recipe_id)
 

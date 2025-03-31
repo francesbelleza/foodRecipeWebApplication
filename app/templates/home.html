@@ -4,4 +4,21 @@
 
 {% block content %}
     <h1>Welcome to the Food Web Application</h1>
+
+    {% if current_user.is_authenticated %}
+        <p>Welcome, {{ current_user.username }}!</p>
+        <a href="{{ url_for('logout') }}">
+            <button>Logout</button>
+        </a>
+    {% else %}
+        <p><a href="{{ url_for('login') }}">Login</a> to add or view recipes.</p>
+    {% endif %}
+
+    {% for recipe in recipes %}
+        <h2>{{ recipe.title }}</h2>
+        <p><strong>Added by:</strong> {{ recipe.user.username if recipe.user else "Unknown" }}</p>  <!-- ✅ Fix for missing user -->
+        <p>{{ recipe.description }}</p>
+        <a href="{{ url_for('specific_recipe', recipe_id=recipe.id) }}">View Recipe</a>
+    {% endfor %}
+
 {% endblock %}
